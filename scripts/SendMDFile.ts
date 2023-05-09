@@ -3,7 +3,7 @@ import path from 'path';
 
 const config = {
   dir: "../content/",
-  title: "个人技术笔记"
+  title: "文章备份"
 }
 
 export default class SendMDFile {
@@ -17,13 +17,13 @@ export default class SendMDFile {
     this.readDir(this.entry);
   }
 
-  createElement(tagName: string, props?: any, content?: string) :string{
+  createElement(tagName: string, props?: any, content?: string): string {
     let attributes = ""
     if (!content) {
       content = props
       props = null
-    } else{
-      attributes =  Object.entries(props).map(item => {
+    } else {
+      attributes = Object.entries(props).map(item => {
         return ` ${item[0]}="${item[1]}"`
       }).join("")
     }
@@ -43,7 +43,7 @@ export default class SendMDFile {
   createLinkTitle(path: string, text: string, level: number = 0): void {
     level = level > 5 ? 5 : level + 1;
 
-    this.mdFileString += this.createElement(`h${level}`,this.createElement("a",{href:path},text))
+    this.mdFileString += this.createElement(`h${level}`, this.createElement("a", { href: path }, text))
 
   }
 
@@ -55,7 +55,7 @@ export default class SendMDFile {
    */
   createTitle(text: string, level: number = 0): void {
     level = level > 5 ? 5 : level + 1;
-    this.mdFileString +=this.createElement(`h${level}`,text);
+    this.mdFileString += this.createElement(`h${level}`, text);
   }
 
   /**
