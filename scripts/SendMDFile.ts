@@ -31,7 +31,7 @@ export default class SendMDFile {
     content = Array.isArray(content) ? content.join("\n") : content
 
 
-    return `<${tagName}${attributes}>${content}</${tagName}> \n`
+    return `<${tagName}${attributes}>${content}</${tagName}>`
   }
 
   /**
@@ -44,7 +44,7 @@ export default class SendMDFile {
     level = level > 5 ? 5 : level + 1;
 
     this.mdFileString += this.createElement(`h${level}`, this.createElement("a", { href: path }, text))
-
+    this.mdFileString += "\n"
   }
 
   /**
@@ -56,6 +56,7 @@ export default class SendMDFile {
   createTitle(text: string, level: number = 0): void {
     level = level > 5 ? 5 : level + 1;
     this.mdFileString += this.createElement(`h${level}`, text);
+     this.mdFileString += "\n"
   }
 
   /**
