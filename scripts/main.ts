@@ -1,6 +1,6 @@
+require('dotenv').config()
 import fs from 'fs';
 import SendMDFile from './SendMDFile';
-
 /**
  * @description: 主函数
  */
