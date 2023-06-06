@@ -11,11 +11,11 @@
   <li><code>pnpm build</code>自动根据content内容生成README文件索引</li>
 </ul>
 
-<h2>nest开发篇</h2>
+<h2>Nest开发篇</h2>
 
-<h3><a href="content/nest开发篇/01.Nest介绍和新建项目.md">01.Nest介绍和新建项目.md</a></h3>
+<h3><a href="content/Nest开发篇/01.Nest介绍和新建项目.md">01.Nest介绍和新建项目.md</a></h3>
 
-<h3><a href="content/nest开发篇/02.Nest添加TypeORM+MySql.md">02.Nest添加TypeORM+MySql.md</a></h3>
+<h3><a href="content/Nest开发篇/02.Nest添加TypeORM+MySql.md">02.Nest添加TypeORM+MySql.md</a></h3>
 
 <h2>浏览器</h2>
 
@@ -47,5 +47,5 @@
 
 <h2>金融</h2>
 
-<h3><a href="content/金融/01.基本.md">01.基本.md</a></h3>
+<h3><a href="content/金融/01.基本概念.md">01.基本概念.md</a></h3>
 
