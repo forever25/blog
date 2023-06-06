@@ -13,6 +13,7 @@ export default class SendMDFile {
     this.mdFileString = '';
     this.entry = path.join(__dirname, config.dir);
     this.createTitle(config.title);
+    this.mdFileString += config.description;
     this.readDir(this.entry);
   }
 
