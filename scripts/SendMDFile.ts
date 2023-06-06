@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+import { config } from './constants';
 
-const config = {
-  dir: "../content/",
-  title: "文章备份"
-}
+const encryptionKey = process.env.CRYPTO_KEY!;
 
 export default class SendMDFile {
   mdFileString: string; //
@@ -14,24 +13,26 @@ export default class SendMDFile {
     this.mdFileString = '';
     this.entry = path.join(__dirname, config.dir);
     this.createTitle(config.title);
+    this.mdFileString += config.description;
     this.readDir(this.entry);
   }
 
   createElement(tagName: string, props?: any, content?: string): string {
-    let attributes = ""
+    let attributes = '';
     if (!content) {
-      content = props
-      props = null
+      content = props;
+      props = null;
     } else {
-      attributes = Object.entries(props).map(item => {
-        return ` ${item[0]}="${item[1]}"`
-      }).join("")
+      attributes = Object.entries(props)
+        .map(item => {
+          return ` ${item[0]}="${item[1]}"`;
+        })
+        .join('');
     }
 
-    content = Array.isArray(content) ? content.join("\n") : content
+    content = Array.isArray(content) ? content.join('\n') : content;
 
-
-    return `<${tagName}${attributes}>${content}</${tagName}>`
+    return `<${tagName}${attributes}>${content}</${tagName}>`;
   }
 
   /**
@@ -43,8 +44,8 @@ export default class SendMDFile {
   createLinkTitle(path: string, text: string, level: number = 0): void {
     level = level > 5 ? 5 : level + 1;
 
-    this.mdFileString += this.createElement(`h${level}`, this.createElement("a", { href: path }, text))
-    this.mdFileString += "\n"
+    this.mdFileString += this.createElement(`h${level}`, this.createElement('a', { href: path }, text));
+    this.mdFileString += '\n\n';
   }
 
   /**
@@ -56,7 +57,7 @@ export default class SendMDFile {
   createTitle(text: string, level: number = 0): void {
     level = level > 5 ? 5 : level + 1;
     this.mdFileString += this.createElement(`h${level}`, text);
-     this.mdFileString += "\n"
+    this.mdFileString += '\n\n';
   }
 
   /**
@@ -75,9 +76,27 @@ export default class SendMDFile {
       } else {
         let winPath = location.replace(this.entry, 'content/');
         let linuxPath = winPath.replaceAll(path.sep, '/');
-        this.createLinkTitle(linuxPath, location.split(path.sep).at(-1) || '', level);
+        const fileName = location.split(path.sep).at(-1) || '';
+        this.encryptionFile(location, fileName);
+        this.createLinkTitle(linuxPath, fileName, level);
       }
     });
+  }
+
+  encryptionFile(paths: string, fileName: string) {
+    if (fileName.includes('_enc') && !fileName.includes('_enc_end')) {
+      const text = fs.readFileSync(paths).toString('utf-8');
+      const encText = encryptionData(text);
+      fs.writeFileSync(paths, encText, {
+        encoding: 'utf-8',
+        flag: 'w+',
+      });
+
+      const newPath = paths.replace('_enc', '_enc_end');
+      try {
+        fs.rename(paths, newPath, () => {});
+      } catch (error) {}
+    }
   }
 
   /**
@@ -88,3 +107,23 @@ export default class SendMDFile {
     return this.mdFileString;
   }
 }
+
+export const encryptionData = (src: string) => {
+  const key = encryptionKey;
+  const iv = encryptionKey;
+  let sign = '';
+  const cipher = createCipheriv('aes-128-cbc', key, iv); // createCipher在10.0.0已被废弃
+  sign += cipher.update(src, 'utf8', 'hex');
+  sign += cipher.final('hex');
+  return sign;
+};
+
+export const decryptData = (sign: string) => {
+  const key = encryptionKey;
+  const iv = encryptionKey;
+  let src = '';
+  const cipher = createDecipheriv('aes-128-cbc', key, iv);
+  src += cipher.update(sign, 'hex', 'utf8');
+  src += cipher.final('utf8');
+  return src;
+};
