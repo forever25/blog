@@ -17,6 +17,10 @@
 
 <h3><a href="content/Nest开发篇/02.Nest添加TypeORM+MySql.md">02.Nest添加TypeORM+MySql.md</a></h3>
 
+<h2>webgl</h2>
+
+<h3><a href="content/webgl/01.webgl初探.md">01.webgl初探.md</a></h3>
+
 <h2>浏览器</h2>
 
 <h3><a href="content/浏览器/从输入url开始浏览器发生了什么.md">从输入url开始浏览器发生了什么.md</a></h3>
@@ -27,7 +31,7 @@
 
 <h2>简历</h2>
 
-<h3><a href="content/简历/2023前端简历_enc_end.md">2023前端简历_enc_end.md</a></h3>
+<h3><a href="content/简历/2023前端简历_enc.md">2023前端简历_enc.md</a></h3>
 
 <h2>算法</h2>
 
