@@ -31,7 +31,7 @@
 
 <h2>简历</h2>
 
-<h3><a href="content/简历/2023前端简历_enc.md">2023前端简历_enc.md</a></h3>
+<h3><a href="content/简历/2023前端简历_enc_end.md">2023前端简历_enc_end.md</a></h3>
 
 <h2>算法</h2>
 
